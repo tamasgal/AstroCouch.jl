@@ -15,7 +15,7 @@ makedocs(;
         "Home" => "index.md",
         "The SOFA sub-package" => Any[
             "Introduction" => "SOFA.md",
-            "AstroCouch" => "SOFA/astrocouch.md",
+            "Astrometry" => "SOFA/astrometry.md",
             "Calendars" => "SOFA/calendars.md",
             "Coefficients" => "SOFA/coefficients.md",
             "Ecliptic" => "SOFA/ecliptic.md",
