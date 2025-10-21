@@ -1,7 +1,7 @@
-name = "Astrometry"
-uuid = "f1a567a2-b8c3-46a6-a8e4-0d50b742dea6"
+name = "AstroCouch"
+uuid = "49c2c03a-1c99-4e96-bd03-21227f8707f2"
 version = "0.1.0"
-authors = ["Paul Barrett <pebarrett@gmail.com> and contributors"]
+authors = ["Tamas Gal <tamas.gal@fau.de> and contributors"]
 
 [deps]
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
