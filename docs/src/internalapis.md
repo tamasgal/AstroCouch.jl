@@ -1,3 +1,3 @@
 ```@autodocs
-Modules = [Astrometry]
+Modules = [AstroCouch]
 ```

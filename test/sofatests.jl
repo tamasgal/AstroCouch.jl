@@ -1,4 +1,4 @@
-using Astrometry
+using AstroCouch
 using Test
 ####   Test SOFA functions   ####
 

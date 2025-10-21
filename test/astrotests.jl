@@ -1,4 +1,4 @@
-using Astrometry
+using AstroCouch
 using Test
 
 
@@ -15,7 +15,7 @@ end
     date = 2453736.5
     ϵA = iau_1980_obliquity(date)
     ψ, ϵ = iau_1980_nutation(date)
-    @test all(abs.(Astrometry.Rx(-(ϵA + ϵ))*Astrometry.Rz(-ψ)*Astrometry.Rx(ϵA) .- rtruen80) .<= 1e-13)
+    @test all(abs.(AstroCouch.Rx(-(ϵA + ϵ))*AstroCouch.Rz(-ψ)*AstroCouch.Rx(ϵA) .- rtruen80) .<= 1e-13)
 end
 
 @testset "precession matrix" begin
@@ -23,7 +23,7 @@ end
                 -0.8696632209485112192e-3 0.9999996218428560614 -0.1643284776111886407e-6;
                 -0.3779153474950335077e-3 -0.1643306746147366896e-6 0.9999999285899790119]
     ψ, ω, χ = iau_1976_precession(JD2000, 2450124.4999)
-    @test all(abs.(Astrometry.Rz(-ω)*Astrometry.Ry(χ)*Astrometry.Rz(-ψ) .- rtruep76) .<= 1e-13)
+    @test all(abs.(AstroCouch.Rz(-ω)*AstroCouch.Ry(χ)*AstroCouch.Rz(-ψ) .- rtruep76) .<= 1e-13)
 end
 
 @testset "precession-nutation matrix" begin
@@ -62,10 +62,10 @@ end
              -0.8836082880798569274e-5 0.9999999991354655028 -0.4063240865362499850e-4;
              -0.3831194272065995866e-5 0.4063237480216291775e-4 0.9999999991671660338]
     date = 2453736.5
-    Δt = (date - JD2000)/(100*Astrometry.DAYPERYEAR)
-    ϵA = iau_1980_obliquity(date)+ deg2rad(1/3600)*Astrometry.ϵ_corr_2000*Δt
+    Δt = (date - JD2000)/(100*AstroCouch.DAYPERYEAR)
+    ϵA = iau_1980_obliquity(date)+ deg2rad(1/3600)*AstroCouch.ϵ_corr_2000*Δt
     ψn, ϵn = iau_2000a_nutation(date)
-    @test all(abs.(Astrometry.Rx(-(ϵA + ϵn))*Astrometry.Rz(-ψn)*Astrometry.Rx(ϵA) .- rtrue) .<= 1e-13)
+    @test all(abs.(AstroCouch.Rx(-(ϵA + ϵn))*AstroCouch.Rz(-ψn)*AstroCouch.Rx(ϵA) .- rtrue) .<= 1e-13)
 end
 
 @testset "nutation matrix" begin
@@ -73,51 +73,51 @@ end
              -0.8837590456632304720e-5 0.9999999991354692733 -0.4063198798559591654e-4;
              -0.3831847930134941271e-5 0.4063195412258168380e-4 0.9999999991671806225]
     date = 2453736.5
-    Δt = (date - JD2000)/(100*Astrometry.DAYPERYEAR)
-    ϵA = iau_1980_obliquity(date) + deg2rad(1/3600)*Astrometry.ϵ_corr_2000*Δt
+    Δt = (date - JD2000)/(100*AstroCouch.DAYPERYEAR)
+    ϵA = iau_1980_obliquity(date) + deg2rad(1/3600)*AstroCouch.ϵ_corr_2000*Δt
     ψn, ϵn = iau_2000b_nutation(date)
-    @test all(abs.(Astrometry.Rx(-(ϵA + ϵn))*Astrometry.Rz(-ψn)*Astrometry.Rx(ϵA) .- rtrue) .<= 1e-13)
+    @test all(abs.(AstroCouch.Rx(-(ϵA + ϵn))*AstroCouch.Rz(-ψn)*AstroCouch.Rx(ϵA) .- rtrue) .<= 1e-13)
 end
 
 @testset "precession matrix" begin
     date = 2453736.5
-    Δt = (date - JD2000)/(100*Astrometry.DAYPERYEAR)
-    ϵA = iau_1980_obliquity(date) + deg2rad(1/3600)*Astrometry.ϵ_corr_2000*Δt
+    Δt = (date - JD2000)/(100*AstroCouch.DAYPERYEAR)
+    ϵA = iau_1980_obliquity(date) + deg2rad(1/3600)*AstroCouch.ϵ_corr_2000*Δt
     ψn, ϵn = iau_2000b_nutation(date)
     rtrueb  = [0.9999999999999942498 -0.7078279744199196626e-7 0.8056217146976134152e-7;
                0.7078279477857337206e-7 0.9999999999999969484 0.3306041454222136517e-7;
                -0.8056217380986972157e-7 -0.3306040883980552500e-7 0.9999999999999962084]
-    rab, ψb, ϵb, ϵ0 = deg2rad(1/3600).*(Astrometry.icrs_ra_2000, Astrometry.ψ_bias_2000,
-                                        Astrometry.ϵ_bias_2000, Astrometry.ϵ0_2000)
-    rcalcb = Astrometry.Rx(-ϵb)*Astrometry.Ry(ψb*sin(ϵ0))*Astrometry.Rz(rab)
+    rab, ψb, ϵb, ϵ0 = deg2rad(1/3600).*(AstroCouch.icrs_ra_2000, AstroCouch.ψ_bias_2000,
+                                        AstroCouch.ϵ_bias_2000, AstroCouch.ϵ0_2000)
+    rcalcb = AstroCouch.Rx(-ϵb)*AstroCouch.Ry(ψb*sin(ϵ0))*AstroCouch.Rz(rab)
     @test all(abs.(rcalcb .- rtrueb) .<= 1e-13)
     #
     rtruep  = [0.9999989300532289018 -0.1341647226791824349e-2 -0.5829880927190296547e-3;
                0.1341647231069759008e-2 0.9999990999908750433 -0.3837444441583715468e-6;
                0.5829880828740957684e-3 -0.3984203267708834759e-6 0.9999998300623538046]
     ψ, ω, χ = iau_2000_precession(date)
-    rcalcp = Astrometry.Rz(χ)*Astrometry.Rx(-ω)*Astrometry.Rz(-ψ)*Astrometry.Rx(ϵ0)
+    rcalcp = AstroCouch.Rz(χ)*AstroCouch.Rx(-ω)*AstroCouch.Rz(-ψ)*AstroCouch.Rx(ϵ0)
     @test all(abs.(rcalcp .- rtruep) .<= 1e-13)
     #
     rtruebp = [0.9999989300052243993 -0.1341717990239703727e-2 -0.5829075749891684053e-3;
                0.1341718013831739992e-2 0.9999990998959191343 -0.3505759733565421170e-6;
                0.5829075206857717883e-3 -0.4315219955198608970e-6 0.9999998301093036269]
-    rcalcbp = (Astrometry.Rz(χ)*Astrometry.Rx(-ω)*Astrometry.Rz(-ψ)*Astrometry.Rx(ϵ0) *
-               Astrometry.Rx(-ϵb)*Astrometry.Ry(ψb*sin(ϵ0))*Astrometry.Rz(rab))
+    rcalcbp = (AstroCouch.Rz(χ)*AstroCouch.Rx(-ω)*AstroCouch.Rz(-ψ)*AstroCouch.Rx(ϵ0) *
+               AstroCouch.Rx(-ϵb)*AstroCouch.Ry(ψb*sin(ϵ0))*AstroCouch.Rz(rab))
     @test all(abs.(rcalcbp .- rtruebp) .<= 1e-13)
     #
     rtruen  = [0.9999999999536069682 0.8837746144872140812e-5 0.3831488838252590008e-5;
                -0.8837590456633197506e-5 0.9999999991354692733 -0.4063198798559573702e-4;
                -0.3831847930135328368e-5 0.4063195412258150427e-4 0.9999999991671806225]
-    rcalcn  = Astrometry.Rx(-(ϵA + ϵn))*Astrometry.Rz(-ψn)*Astrometry.Rx(ϵA)
+    rcalcn  = AstroCouch.Rx(-(ϵA + ϵn))*AstroCouch.Rz(-ψn)*AstroCouch.Rx(ϵA)
     @test all(abs.(rcalcn .- rtruen) .<= 1e-13)
     #
     rtruepn = [0.9999989440499982806 -0.1332880253640848301e-2 -0.5790760898731087295e-3;
                0.1332856746979948745e-2 0.9999991109064768883 -0.4097740555723063806e-4;
                0.5791301929950205000e-3 0.4020553681373702931e-4 0.9999998314958529887]
-    rcalcpn = (Astrometry.Rx(-(ϵA + ϵn))*Astrometry.Rz(-ψn)*Astrometry.Rx(ϵA) *
-               Astrometry.Rz(χ)*Astrometry.Rx(-ω)*Astrometry.Rz(-ψ)*Astrometry.Rx(ϵ0) *
-               Astrometry.Rx(-ϵb)*Astrometry.Ry(ψb*sin(ϵ0))*Astrometry.Rz(rab))
+    rcalcpn = (AstroCouch.Rx(-(ϵA + ϵn))*AstroCouch.Rz(-ψn)*AstroCouch.Rx(ϵA) *
+               AstroCouch.Rz(χ)*AstroCouch.Rx(-ω)*AstroCouch.Rz(-ψ)*AstroCouch.Rx(ϵ0) *
+               AstroCouch.Rx(-ϵb)*AstroCouch.Ry(ψb*sin(ϵ0))*AstroCouch.Rz(rab))
     @test all(abs.(rcalcpn .- rtruepn) .<= 1e-13)    
     #   precession-nutation matrix
     rtrue00a = [0.9999989440476103435 -0.1332881761240011763e-2 -0.5790767434730085751e-3;

@@ -1,9 +1,9 @@
-using Documenter, Astrometry
+using Documenter, AstroCouch
 
 makedocs(;
-    modules = [Astrometry],
-    sitename = "Astrometry.jl",
-    authors = "Paul Barrett",
+    modules = [AstroCouch],
+    sitename = "AstroCouch.jl",
+    authors = "Tamas Gal",
     format = Documenter.HTML(;
         assets = ["assets/custom.css"],
         sidebar_sitename = false,
@@ -15,7 +15,7 @@ makedocs(;
         "Home" => "index.md",
         "The SOFA sub-package" => Any[
             "Introduction" => "SOFA.md",
-            "Astrometry" => "SOFA/astrometry.md",
+            "AstroCouch" => "SOFA/astrocouch.md",
             "Calendars" => "SOFA/calendars.md",
             "Coefficients" => "SOFA/coefficients.md",
             "Ecliptic" => "SOFA/ecliptic.md",
@@ -36,7 +36,7 @@ makedocs(;
 )
 
 deploydocs(;
-  repo = "github.com/barrettp/Astrometry.jl/docs",
+  repo = "github.com/tamasgal/AstroCouch.jl/docs",
   devbranch = "main",
   push_preview=true
 )

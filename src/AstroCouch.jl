@@ -1,4 +1,4 @@
-module Astrometry
+module AstroCouch
 
 export JD2000, MJD0, calendar_mjd
 export iau_1980_nutation, iau_1980_obliquity, iau_1976_precession
